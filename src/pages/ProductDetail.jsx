@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { fetchProductById } from '../api/products.js'
 import { formatPrice } from '../utils/catalog.js'
 import { useStore } from '../context/StoreContext.jsx'
+import AddToCartButton from '../components/AddToCartButton.jsx'
 
 export default function ProductDetail() {
   const { id } = useParams()
@@ -10,7 +11,7 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [retry, setRetry] = useState(0)
-  const { addToCart, toggleWishlist, wishlist } = useStore()
+  const { toggleWishlist, wishlist } = useStore()
 
   useEffect(() => {
     const controller = new AbortController()
@@ -74,15 +75,10 @@ export default function ProductDetail() {
           <p className="mt-4 text-slate-600 dark:text-slate-400">{product.description}</p>
 
           <div className="mt-6 flex gap-3">
-            <button
-              onClick={() => addToCart(product)}
-              className="rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white hover:bg-blue-700"
-            >
-              Add to cart
-            </button>
+            <AddToCartButton product={product} />
             <button
               onClick={() => toggleWishlist(product)}
-              className="rounded-lg border border-slate-300 px-6 py-3 font-semibold hover:bg-slate-100 dark:border-slate-700 dark:hover:bg-slate-800"
+              className="rounded-lg border border-slate-300 px-6 py-3 font-semibold transition-all duration-150 hover:bg-slate-100 active:scale-95 active:shadow-inner dark:border-slate-700 dark:hover:bg-slate-800"
             >
               {isSaved ? '♥ Saved' : '♡ Save to wishlist'}
             </button>

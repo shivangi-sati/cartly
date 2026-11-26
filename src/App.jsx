@@ -1,4 +1,4 @@
-import { Link, Route, Routes } from 'react-router-dom'
+import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import Catalog from './pages/Catalog.jsx'
 import ProductDetail from './pages/ProductDetail.jsx'
 import Cart from './pages/Cart.jsx'
@@ -10,6 +10,7 @@ import { useStore } from './context/StoreContext.jsx'
 
 export default function App() {
   const { cartCount, wishlist } = useStore()
+  const location = useLocation()
 
   return (
     <div className="min-h-screen p-8">
@@ -26,8 +27,8 @@ export default function App() {
         </nav>
       </header>
 
-      <main>
-        <Routes>
+      <main key={location.pathname} className="page-enter">
+        <Routes location={location}>
           <Route path="/" element={<Catalog />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />

@@ -5,7 +5,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { fetchProducts } from '../api/products';
 import { formatPrice, filterProducts, sortProducts } from '../utils/catalog';
 import { useDebounce } from '../hooks/useDebounce.js';
-import { useStore } from '../context/StoreContext.jsx';
+import AddToCartButton from '../components/AddToCartButton.jsx';
 
 const Catalog = () => {
   const [products, setProducts] = useState([]);
@@ -14,7 +14,6 @@ const Catalog = () => {
   const [retry, setRetry] = useState(0);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const { addToCart } = useStore();
 
   // Read URL parameters
   const q = searchParams.get('q') || '';
@@ -259,12 +258,9 @@ const Catalog = () => {
                 {product.category}
               </p>
 
-              <button
-                onClick={() => addToCart(product)}
-                className="mt-3 w-full rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700"
-              >
-                Add to cart
-              </button>
+              <div className="mt-3">
+                <AddToCartButton product={product} compact />
+              </div>
             </article>
           ))}
 

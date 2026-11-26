@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
 import { formatPrice } from '../utils/catalog.js'
 import { useStore } from '../context/StoreContext.jsx'
+import AddToCartButton from '../components/AddToCartButton.jsx'
 
 export default function Wishlist() {
-  const { wishlist, toggleWishlist, addToCart } = useStore()
+  const { wishlist, toggleWishlist } = useStore()
 
   if (wishlist.length === 0) {
     return (
@@ -48,15 +49,12 @@ export default function Wishlist() {
             </p>
 
             <div className="mt-3 flex gap-2">
-              <button
-                onClick={() => addToCart(product)}
-                className="flex-1 rounded-lg bg-blue-600 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-700"
-              >
-                Add to cart
-              </button>
+              <div className="flex-1">
+                <AddToCartButton product={product} compact />
+              </div>
               <button
                 onClick={() => toggleWishlist(product)}
-                className="rounded-lg border border-slate-300 px-3 py-2 text-sm dark:border-slate-700"
+                className="rounded-lg border border-slate-300 px-3 py-2 text-sm transition-all duration-150 hover:bg-slate-100 active:scale-95 active:shadow-inner dark:border-slate-700 dark:hover:bg-slate-800"
               >
                 Remove
               </button>
