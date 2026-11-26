@@ -6,6 +6,7 @@ import { fetchProducts } from '../api/products';
 import { formatPrice, filterProducts, sortProducts } from '../utils/catalog';
 import { useDebounce } from '../hooks/useDebounce.js';
 import AddToCartButton from '../components/AddToCartButton.jsx';
+import Dropdown from '../components/Dropdown.jsx';
 
 const Catalog = () => {
   const [products, setProducts] = useState([]);
@@ -90,6 +91,25 @@ const Catalog = () => {
     ...new Set(products.map(p => p.category))
   ].sort();
 
+  const categoryOptions = [
+    { value: '', label: 'All Categories' },
+    ...categories.map(cat => ({ value: cat, label: cat })),
+  ];
+
+  const ratingOptions = [
+    { value: '', label: 'All Ratings' },
+    { value: '4', label: '4+' },
+    { value: '4.5', label: '4.5+' },
+  ];
+
+  const sortOptions = [
+    { value: 'popular', label: 'Popular' },
+    { value: 'price-asc', label: 'Price: Low to High' },
+    { value: 'price-desc', label: 'Price: High to Low' },
+    { value: 'rating', label: 'Rating' },
+    { value: 'title', label: 'Title: A-Z' },
+  ];
+
   // Filter and Sort Products
   const visible = useMemo(() => {
     const filtered = filterProducts(products, {
@@ -152,19 +172,13 @@ const Catalog = () => {
         />
 
         {/* Category */}
-        <select
+        <Dropdown
+          label="Category"
           value={category}
-          onChange={e => updateParam('category', e.target.value)}
-          className="rounded-lg border border-slate-300 bg-white px-3 py-2 dark:border-slate-700 dark:bg-slate-900"
-        >
-          <option value="">All Categories</option>
-
-          {categories.map(cat => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
+          options={categoryOptions}
+          onChange={value => updateParam('category', value)}
+          className="min-w-[11rem]"
+        />
 
         {/* Minimum Price */}
         <input
@@ -185,28 +199,22 @@ const Catalog = () => {
         />
 
         {/* Rating */}
-        <select
+        <Dropdown
+          label="Rating"
           value={rating}
-          onChange={e => updateParam('rating', e.target.value)}
-          className="rounded-lg border border-slate-300 bg-white px-3 py-2 dark:border-slate-700 dark:bg-slate-900"
-        >
-          <option value="">All Ratings</option>
-          <option value="4">4+</option>
-          <option value="4.5">4.5+</option>
-        </select>
+          options={ratingOptions}
+          onChange={value => updateParam('rating', value)}
+          className="min-w-[9rem]"
+        />
 
         {/* Sorting */}
-        <select
+        <Dropdown
+          label="Sort by"
           value={sort}
-          onChange={e => updateParam('sort', e.target.value)}
-          className="rounded-lg border border-slate-300 bg-white px-3 py-2 dark:border-slate-700 dark:bg-slate-900"
-        >
-          <option value="popular">Popular</option>
-          <option value="price-asc">Price: Low to High</option>
-          <option value="price-desc">Price: High to Low</option>
-          <option value="rating">Rating</option>
-          <option value="title">Title: A-Z</option>
-        </select>
+          options={sortOptions}
+          onChange={value => updateParam('sort', value)}
+          className="min-w-[11rem]"
+        />
 
       </div>
 
