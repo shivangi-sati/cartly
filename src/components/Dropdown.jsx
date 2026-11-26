@@ -93,7 +93,7 @@ export default function Dropdown({ label, value, options, onChange, className = 
         aria-label={label}
         onClick={() => setOpen((wasOpen) => !wasOpen)}
         onKeyDown={handleTriggerKeyDown}
-        className={`flex w-full items-center justify-between gap-2 rounded-lg border bg-white px-3 py-2 text-left text-sm transition-all duration-150 ease-out hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 active:scale-[0.98] motion-reduce:transition-none dark:bg-slate-900 ${
+        className={`flex w-full items-center justify-between gap-2 rounded-lg border bg-white px-3 py-2 text-left text-sm transition-all duration-100 ease-out hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 active:scale-[0.98] motion-reduce:transition-none dark:bg-slate-900 ${
           open
             ? 'border-blue-500 ring-2 ring-blue-500/20'
             : 'border-slate-300 dark:border-slate-700'
@@ -104,7 +104,7 @@ export default function Dropdown({ label, value, options, onChange, className = 
           viewBox="0 0 20 20"
           fill="currentColor"
           aria-hidden="true"
-          className={`h-4 w-4 shrink-0 text-slate-500 transition-transform duration-200 ease-out motion-reduce:transition-none ${
+          className={`h-4 w-4 shrink-0 text-slate-500 transition-transform duration-[120ms] ease-out motion-reduce:transition-none ${
             open ? 'rotate-180' : ''
           }`}
         >
@@ -121,10 +121,11 @@ export default function Dropdown({ label, value, options, onChange, className = 
         ref={listRef}
         role="listbox"
         aria-label={label}
-        className={`absolute left-0 top-full z-30 mt-1 w-full min-w-[12rem] origin-top overflow-hidden rounded-lg border border-slate-200 bg-white shadow-xl transition-all duration-200 ease-out motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-900 ${
+        aria-hidden={!open}
+        className={`absolute left-0 top-full z-30 mt-1 w-full min-w-[12rem] origin-top rounded-lg border border-slate-200 bg-white shadow-xl transition-[opacity,transform] duration-[120ms] ease-out motion-reduce:transition-none dark:border-slate-700 dark:bg-slate-900 ${
           open
-            ? 'pointer-events-auto max-h-64 translate-y-0 opacity-100'
-            : 'pointer-events-none max-h-0 -translate-y-1 opacity-0'
+            ? 'pointer-events-auto translate-y-0 scale-100 opacity-100'
+            : 'pointer-events-none -translate-y-1 scale-95 opacity-0'
         }`}
       >
         <div className="max-h-64 overflow-y-auto p-1">
@@ -142,7 +143,7 @@ export default function Dropdown({ label, value, options, onChange, className = 
                   setOpen(false)
                 }}
                 onKeyDown={handleOptionKeyDown}
-                className={`flex w-full items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left text-sm transition-colors duration-150 hover:bg-blue-50 focus:bg-blue-50 focus:outline-none motion-reduce:transition-none dark:hover:bg-slate-800 dark:focus:bg-slate-800 ${
+                className={`flex w-full items-center justify-between gap-2 rounded-md px-2 py-1.5 text-left text-sm transition-colors duration-100 hover:bg-blue-50 focus:bg-blue-50 focus:outline-none motion-reduce:transition-none dark:hover:bg-slate-800 dark:focus:bg-slate-800 ${
                   isSelected
                     ? 'font-semibold text-blue-600 dark:text-blue-400'
                     : 'text-slate-700 dark:text-slate-200'
