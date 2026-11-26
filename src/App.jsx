@@ -1,4 +1,5 @@
 import { Link, Route, Routes, useLocation } from 'react-router-dom'
+import { Moon, Sun } from 'lucide-react'
 import Catalog from './pages/Catalog.jsx'
 import ProductDetail from './pages/ProductDetail.jsx'
 import Cart from './pages/Cart.jsx'
@@ -7,9 +8,11 @@ import Checkout from './pages/Checkout.jsx'
 import Orders from './pages/Orders.jsx'
 import OrderConfirmation from './pages/OrderConfirmation.jsx'
 import { useStore } from './context/StoreContext.jsx'
+import { useTheme } from './hooks/useTheme.js'
 
 export default function App() {
   const { cartCount, wishlist } = useStore()
+  const { theme, toggleTheme } = useTheme()
   const location = useLocation()
 
   return (
@@ -17,6 +20,19 @@ export default function App() {
       <header className="mb-8 flex items-center gap-5">
         <Link to="/" className="text-3xl font-bold">Cartly</Link>
         <nav className="ml-auto flex items-center gap-4 text-sm">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="rounded-full border border-slate-300 p-2 transition-all duration-150 hover:bg-slate-100 active:scale-95 motion-reduce:transition-none dark:border-slate-700 dark:hover:bg-slate-800"
+          >
+            {theme === 'dark' ? (
+              <Sun className="h-4 w-4" aria-hidden="true" />
+            ) : (
+              <Moon className="h-4 w-4" aria-hidden="true" />
+            )}
+          </button>
           <Link to="/orders" className="hover:underline">Orders</Link>
           <Link to="/wishlist" className="rounded-full bg-slate-200 px-3 py-1 dark:bg-slate-800">
             Wishlist: {wishlist.length}
